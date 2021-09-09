@@ -1,0 +1,238 @@
+{% extends "index.html" %}
+{% block content %}
+{% load static %}
+
+
+<style>
+
+ .carousel-item{
+ height:32rem;
+ background: #7777;
+ position: relative;
+ }
+ .carousel-item img{
+ height: 100%;
+ width: 100%;
+ object-fit:cover;
+ }
+
+#section{
+background: #000;
+}
+
+@media(max-width: 760px){
+.news{
+font-size: 10px;
+flex-basis: 21%;
+margin: auto;
+}
+.news-linkkk{font-size: 12px;}
+}
+
+.covid-container{
+width: 70%;
+margin: auto;
+padding: 40px 40px;
+text-align: center;
+color: #fff;
+}
+.covid-container{
+background-image: url({% static 'images/corona.gif' %})
+}
+.covid-container h6{
+font-size: 10px;
+text-align: right;
+padding-right: 35%;
+}
+
+.covid-butt{
+border: 1px solid transparent;
+background-color: crimson;
+padding:3px 20px;
+font-size: 10px;
+color: black;
+transition: 0.3s ease in;
+cursor: pointer;
+}
+.covid-butt:hover{
+background-color: red;
+text-decoration: none;
+letter-spacing: 1.5px;
+color: #fff;
+}
+
+@media(max-width: 600px){
+.cov-container{
+margin-top: 5%;
+}
+.covid-container h4{
+font-size: 15px;
+}
+.covid-container h6{
+padding: 10px 20px;
+}
+}
+</style>
+
+<p class="text-kuwangora">
+        <span style="color:blue;font-weight: bold;">S</span>
+        <span style="color:yellow;font-weight: bold;">W</span>
+        <span style="color:green;font-weight: bold;">A</span>
+        <span style="color:red;font-weight: bold;">G</span>
+        <span>-</span>
+        <span style="color:green;font-weight: bold;">N</span>
+        <span style="color:yellow;font-weight: bold;">A</span>
+        <span>-</span>
+        <span style="color:red;font-weight: bold;">M</span>
+        <span style="color:green;font-weight: bold;">A</span>
+        <span style="color:blue;font-weight: bold;">E</span>
+        <span style="color:yellow;font-weight: bold;">N</span>
+        <span style="color:green;font-weight: bold;">D</span>
+        <span style="color:blue;font-weight: bold;">E</span>
+        <span style="color:red;font-weight: bold;">L</span>
+        <span style="color:yellow;font-weight: bold;">E</span>
+        <span style="color:red;font-weight: bold;">O</span>
+        <span>-</span>
+        <span style="color:red;font-weight: bold;">M</span>
+        <span style="color:green;font-weight: bold;">T</span>
+        <span style="color:red;font-weight: bold;">A</span>
+        <span style="color:blue;font-weight: bold;">A</span>
+        <span style="color:yellow;font-weight: bold;">N</span>
+        <span style="color:green;font-weight: bold;">I</span>
+    </p>
+<section id="section">
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for advertisement in advertisements %}
+    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <img src="{{ advertisement.advert_img.url }}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ advertisement.title }}</h5>
+        <p>{{ advertisement.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  </div>
+</div>
+</section>
+
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+
+<div class="main-container">
+    <h1 class="row-link">News</h1>
+    <p><i>We will provide you with the latest news happening in our area</i></p>
+    <div class="row">
+        {% for update in updates %}
+            <div class="news">
+                <a href="{% url 'updates:news_details' slug=update.slug %}"><img class="news-img" src="{{ update.news_img.url }}"></a>
+                <div class="post-review">
+                     <hr>
+                    <h6><a class="news-linkkk" href="{% url 'updates:news_details' slug=update.slug %}">{{ update.title }}</a></h6>
+                    <p style="color: black;"> {{ update.description }} </p>
+                    {% for tag in update.Tags.all %}
+                    <span class="tag"> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <a style="text-align:center" class="buttonlin" href="{% url 'updates:news_list' %}">VIEW MORE NEWS</a>
+    </div>
+    <hr>
+
+    <h1 class="row-link">Projects</h1>
+    <p><i>Here are all the projects done by our local authorities in our area</i></p>
+    <div class="row">
+        {% for project in projects %}
+            <div class="news">
+                <a href="{% url 'projectss:project_detail' slug=project.slug %}"><img class="news-img" src="{{ project.proj_img.url }}"></a>
+                <hr>
+                <div class="post-review">
+                    <h6><a class="news-linkkk" href="{% url 'projectss:project_detail' slug=project.slug %}"> {{ project.name }}</a></h6>
+                    <p style="color: black;">{{ project.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <a style="text-align:center" class="buttonlin" href="{% url 'projectss:project_home'  %}">VIEW MORE PROJECTS</a>
+    </div>
+    <hr>
+
+
+    <h1 class="row-link">Vacancies</h1>
+    <p><i>View some of the vacant houses in our hood</i></p>
+    <div class="row">
+        {% for vacancy in vacancies %}
+            <div class="vac" >
+                <img class="vac-img" src="{{ vacancy.house_img.url }}">
+                 <hr>
+                <div class="post-review">
+                    <h6><a class="news-linkkk" href="{% url 'vacancies:vacancy_detail' slug=vacancy.slug %}">{{ vacancy.location }}</a></h6>
+                    <p style="color: black;"> {{ vacancy.description }} </p>
+                    <hr>
+                    {% for tag in vacancy.tags.all %}
+                    <span class="tag"> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <a style="text-align:center" class="buttonlin" href="{% url 'vacancies:vacancy_home' %}">VIEW MORE VACANCIES</a>
+    </div>
+    <hr>
+
+    <h1 class="row-link">Culture</h1>
+    <p><i>Our culture here in Umoja</i></p>
+    <div class="row">
+        {% for cultur in culture %}
+            <div class="vac">
+                <img class="vac-img" src="{{ cultur.img.url }}">
+                <hr>
+                <div class="post-review">
+                    <h6><a class="news-linkkk" href="{% url 'culture:culture_detail' slug=cultur.slug %}" >{{ cultur.name }}</a></h6>
+                    <p style="color: black;"> {{ cultur.description }} </p>
+                </div>
+            </div>
+        {% endfor %}
+        <a style="text-align:center" class="buttonlin" href="{% url 'culture:culture_home' %}">VIEW MORE</a>
+    </div>
+
+    <h1 class="row-link">Facilities</h1>
+    <p><i>Here are the facilities of our yard</i></p>
+    <div class="row">
+        {% for facility in facilities %}
+            <div class="vac">
+                <img class="vac-img" src="{{ facility.img.url }}">
+                <div class="post-review">
+                    <h6><a class="news-linkkk" href="{% url 'facilities:facilities_detail' slug=facility.slug %}">{{ facility.name }}</a></h6>
+                    <p style="color: black;"> {{ facility.description }}</p>
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+        <a style="text-align:center" class="buttonlin" href="{% url 'facilities:facilities_home' %}">VIEW MORE FACILITIES</a>
+    </div>
+
+</div>
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+
+{% endblock %}

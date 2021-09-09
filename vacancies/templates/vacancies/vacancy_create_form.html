@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="create-news">
+<h1> Create Vacancy </h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form|crispy }}
+    <input class="buttonlin" type="submit" value="Post">
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "index.html" %}
+{% block content %}
+
+{% load static %}
+<style>
+.post-review h6, p{
+    text-align:left;
+}
+.covid-container{
+width: 70%;
+margin: auto;
+padding: 40px 40px;
+text-align: center;
+color: #fff;
+}
+.covid-container{
+background-image: url({% static 'images/corona.gif' %})
+}
+.covid-container h6{
+font-size: 10px;
+text-align: right;
+padding-right: 35%;
+}
+
+.covid-butt{
+border: 1px solid transparent;
+background-color: crimson;
+padding:3px 20px;
+font-size: 10px;
+color: black;
+transition: 0.3s ease in;
+cursor: pointer;
+}
+.covid-butt:hover{
+background-color: red;
+text-decoration: none;
+letter-spacing: 1.5px;
+color: #fff;
+}
+@media(max-width: 600px){
+.cov-container{
+margin-top: 5%;
+}
+.covid-container h4{
+font-size: 15px;
+}
+.covid-container h6{
+padding: 10px 20px;
+}
+}
+</style>
+
+
+<section class="main-container">
+    <form method="GET" id="searchForm">
+        {{ myFilter.form }}
+        <input type="submit" value="search">
+    </form>
+
+    <h1 class="row-link">Facilities</h1>
+    <div class="row">
+        {% for project in projects %}
+            <div class="news">
+                <img class="news-img" src="{{ project.img.url }}">
+                <div class="post-review">
+                     <hr>
+                    <h6><a href="{% url 'projectss:project_detail' slug=project.slug %}">{{ project.name }}</a></h6>
+                    <p style="color: black;"> {{ project.description }} </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+    <div style="margin-top: 5px;">
+        {% if projects.has_other_pages %}
+        <ul class="pagination">
+            {% if projects.has_previous %}
+            <li class="page-item"><a href="?page={{ updates.previous_page_number }}" class="page-link">&laquo;</a> </li>
+            {% endif %}
+
+            {% for i in projects.paginator.page_range %}
+            {% if projects.number == i %}
+            <li class="page-item"><a class="active page-link">{{ i }}</a> </li>
+            {% else %}
+            <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a> </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if projects.has_next %}
+            <li class="page-item"><a href="?page={{ updates.next_page_number }}" class="page-link">&raquo;</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+    <a class="buttonlin" href="{% url 'facilities:create_facilities' %}">Create Facility</a>
+</section>
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+{% endblock %}

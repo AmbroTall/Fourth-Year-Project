@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+
+
+<div class="detail-display">
+    <h1>{{ house.location }}</h1>
+    <img style="width:500px" src="{{ house.house_img.url }}">
+    <p>{{ house.description }}</p>
+</div><br>
+
+{% if request.user.is_authenticated %}
+<div style="text-align: center;margin-top: 15px;">
+    <a class="buttonlin" href="{% url 'updates:news_update' slug=object.slug %}">Update</a>
+    <a class="buttonlin" href="{% url 'updates:news_delete' slug=object.slug %}">Delete</a>
+</div>
+{% endif %}
+
+
+
+{% endblock %}

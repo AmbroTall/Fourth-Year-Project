@@ -1,0 +1,157 @@
+{% extends "indexcovid.html" %}
+{% block content %}
+
+
+{% load static %}
+{% include 'covid/navbar.html' %}
+<style>
+    .container{
+    display: flex;
+    justify-content: center;
+    }
+    .chart{
+    width: 40%;
+    max-height: 595px;
+    overflow : scroll;
+    overflow-x: hidden;
+    padding: 10px 40px;
+    }
+    .chart h1{
+    text-align: center;
+    color: black;
+    }
+    .map{
+    width: 60%;
+    }
+    .map h2{
+    text-align: center;
+    }
+
+    .bar-cont{
+    margin-top: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+
+
+    .bar-cont form{
+    width: 30%;
+    display: block;
+    }
+    .but{
+    padding : 3px 20px;
+    font-size: 10px;
+    margin-top: 4px;
+    }
+
+    .canva{
+    width: 70%;
+    float: left;
+    }
+    .second-container{
+    margin-top: 3%;
+    padding: 20px 30px;
+    }
+
+
+#container {
+    height: 500px;
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+.covid-container{
+width: 70%;
+margin: auto;
+padding: 40px 40px;
+text-align: center;
+color: #fff;
+}
+.covid-container{
+background-image: url({% static 'images/corona.gif' %})
+}
+.covid-container h6{
+font-size: 10px;
+text-align: right;
+padding-right: 35%;
+}
+
+.covid-butt{
+border: 1px solid transparent;
+background-color: crimson;
+padding:3px 20px;
+font-size: 10px;
+color: black;
+transition: 0.3s ease in;
+cursor: pointer;
+}
+.covid-butt:hover{
+background-color: red;
+text-decoration: none;
+letter-spacing: 1.5px;
+color: #fff;
+}
+@media(max-width: 600px){
+.cov-container{
+margin-top: 5%;
+}
+.covid-container h4{
+font-size: 15px;
+}
+.covid-container h6{
+padding: 10px 20px;
+}
+}
+
+
+</style>
+<div class="container">
+    <div class="chart">
+        <h1>Total Infections : {{ total_cases }}</h1>
+        <div class="bar-cont">
+            <form method="post" enctype="multipart/form-data" action="selectCountry">
+                {% csrf_token %}
+                {% for country in countryNames %}
+                <input class="but" type="submit" value="{{ country }}" name="countryName" style="width:100px">
+                {% endfor %}
+            </form>
+
+            <canvas class="canva" id="myChart" width="400" height="4050";></canvas>
+        </div>
+    </div>
+
+
+    <div class="map">
+
+        <div class="second-container">
+            {% if showMap == True %}
+            <h2 class="head">World Map</h2>
+
+            <div id="container">
+                <div class="loading">
+                    <i class="icon-spinner icon-spin icon-large"></i>
+                </div>
+            </div>
+            {% elif showMap == False  %}
+            <h2>{{ countryNameSe }}</h2>
+            <canvas id="lineChart" width="450";></canvas>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="cov-container" style="margin-top: 3%;">
+</div>
+</div>
+<div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<div class="create-news" style="margin-top: 2.5%;">
+<h1>Create Facility</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form|crispy }}
+    <input class="buttonlin" type="submit" value="Add Project">
+</form>
+</div>
+{% endblock %}

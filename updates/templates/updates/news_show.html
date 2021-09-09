@@ -1,0 +1,150 @@
+{% extends "index.html" %}
+{% block content %}
+
+{% load static %}
+<style>
+.post-review h6, p{
+    text-align:left;
+}
+.covid-container{
+width: 70%;
+margin: auto;
+padding: 40px 40px;
+text-align: center;
+color: #fff;
+}
+.covid-container{
+background-image: url({% static 'images/corona.gif' %})
+}
+.covid-container h6{
+font-size: 10px;
+text-align: right;
+padding-right: 35%;
+}
+
+.covid-butt{
+border: 1px solid transparent;
+background-color: crimson;
+padding:3px 20px;
+font-size: 10px;
+color: black;
+transition: 0.3s ease in;
+cursor: pointer;
+}
+.covid-butt:hover{
+background-color: red;
+text-decoration: none;
+letter-spacing: 1.5px;
+color: #fff;
+}
+@media(max-width: 600px){
+.cov-container{
+margin-top: 5%;
+}
+.covid-container h4{
+font-size: 15px;
+}
+.covid-container h6{
+padding: 10px 20px;
+}
+}
+
+ .carousel-item{
+ height:28rem;
+ background: #7777;
+ position: relative;
+ }
+ .carousel-item img{
+ height: 100%;
+ width: 100%;
+ object-fit:cover;
+ }
+
+
+</style>
+
+<section class="main-container">
+    <div>
+        <form method="get">
+            {{ myFilter.form }}
+            <input type="submit" value="search">
+        </form>
+    </div>
+
+
+    <h1 class="row-link">News</h1>
+    <div class="row">
+        {% for update in updates %}
+            <div class="news">
+                <img class="news-img" src="{{ update.news_img.url }}">
+                <div class="post-review">
+                     <hr>
+                    <h6><a class="news-linkkk" href="{% url 'updates:news_details' slug=update.slug %}">{{ update.title }}</a></h6>
+                    <p style="color: black;"> {{ update.description }} </p>
+                    {% for tag in update.Tags.all %}
+                    <span class="tag"> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+    <div style="margin-top: 5px;">
+        {% if updates.has_other_pages %}
+        <ul class="pagination">
+            {% if updates.has_previous %}
+            <li class="page-item"><a href="?page={{ updates.previous_page_number }}" class="page-link">&laquo;</a> </li>
+            {% endif %}
+
+            {% for i in updates.paginator.page_range %}
+            {% if updates.number == i %}
+            <li class="page-item"><a class="active page-link">{{ i }}</a> </li>
+            {% else %}
+            <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a> </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if updates.has_next %}
+            <li class="page-item"><a href="?page={{ updates.next_page_number }}" class="page-link">&raquo;</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+    <a class="buttonlin" href="{% url 'updates:news_create' %}">Create News</a>
+</section>
+
+<section id="section" style="margin-top: 3%;>
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for advertisement in advertisements %}
+    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <img src="{{ advertisement.advert_img.url }}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ advertisement.title }}</h5>
+        <p>{{ advertisement.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  </div>
+</div>
+</section>
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+{% endblock %}
+
