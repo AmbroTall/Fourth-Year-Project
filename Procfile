@@ -1,1 +1,1 @@
-web: guincorn umoja.wsgi
+web: gunicorn umoja.wsgi
