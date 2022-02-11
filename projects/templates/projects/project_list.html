@@ -2,40 +2,10 @@
 {% block content %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 <style>
 .post-review h6, p{
     text-align:left;
-}
-.covid-container{
-width: 70%;
-margin: auto;
-padding: 40px 40px;
-text-align: center;
-color: #fff;
-}
-.covid-container{
-background-image: url({% static 'images/corona.gif' %})
-}
-.covid-container h6{
-font-size: 10px;
-text-align: right;
-padding-right: 35%;
-}
-
-.covid-butt{
-border: 1px solid transparent;
-background-color: crimson;
-padding:3px 20px;
-font-size: 10px;
-color: black;
-transition: 0.3s ease in;
-cursor: pointer;
-}
-.covid-butt:hover{
-background-color: red;
-text-decoration: none;
-letter-spacing: 1.5px;
-color: #fff;
 }
 @media(max-width: 600px){
 .cov-container{
@@ -48,39 +18,76 @@ font-size: 15px;
 padding: 10px 20px;
 }
 }
+
+ .carousel-item{
+ height:28rem;
+ background: #7777;
+ position: relative;
+ }
+ .carousel-item img{
+ height: 100%;
+ width: 100%;
+ object-fit:cover;
+ }
+
+ form label{
+ display: none;
+ }
+
+
+ form{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ }
+
+ .img-doc, .img-doc img{
+ max-height: 180px;
+ max-width: 250px;
+ object-fit: cover;
+ }
+
 </style>
 
-
 <section class="main-container">
-    <div>
-        <form method="GET" id="searchForm">
-            {{ myFilter.form }}
-            <input type="submit" value="search">
+    <div class="mt-5">
+        <form method="get">
+            {{ myFilter.form|crispy }}
+            <input type="submit" class="btn btn-primary ml-3" value="search">
         </form>
     </div>
 
 
+
+<div class="container pt-4 pb-4">
     <h1 class="row-link">Projects</h1>
-    <div class="row">
-        {% for project in projects %}
-            <div class="news">
-                <img class="news-img" src="{{ project.proj_img.url }}">
-                <div class="post-review">
-                     <hr>
-                    <h6><a href="{% url 'projectss:project_detail' slug=project.slug %}">{{ project.name }}</a></h6>
-                    <p style="color: black;"> {{ project.description }} </p>
+	<div class="row">
+        {% for update in projects %}
+		<div class="col">
+			<div class="card border-0 mb-4 box-shadow h-xl-300 pl-0">
+                <div class="img-doc">
+                    <img class="img-fluid" height="200"  src="{{ update.proj_img.url }}" />
                 </div>
-            </div>
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="h4 font-weight-bold">
+					<a class="text-dark" href="{% url 'projectss:project_detail' slug=update.slug %}">{{ update.name|truncatechars:20  }}</a>
+					</h2>
+					<p class="card-text">
+                        {{ update.description|truncatechars:30  }}
+                    </p>
+					<div>
+						<small class="d-block"><a class="text-muted" href="">{{ update.date_created }}</a></small>
+					</div>
+				</div>
+			</div>
+		</div>
         {% endfor %}
-    </div>
-
-
-
+	</div>
     <div style="margin-top: 5px;">
         {% if projects.has_other_pages %}
         <ul class="pagination">
             {% if projects.has_previous %}
-            <li class="page-item"><a href="?page={{ updates.previous_page_number }}" class="page-link">&laquo;</a> </li>
+            <li class="page-item"><a href="?page={{ projects.previous_page_number }}" class="page-link">&laquo;</a> </li>
             {% endif %}
 
             {% for i in projects.paginator.page_range %}
@@ -92,14 +99,42 @@ padding: 10px 20px;
             {% endfor %}
 
             {% if projects.has_next %}
-            <li class="page-item"><a href="?page={{ updates.next_page_number }}" class="page-link">&raquo;</a></li>
+            <li class="page-item"><a href="?page={{ projects.next_page_number }}" class="page-link">&raquo;</a></li>
             {% endif %}
         </ul>
         {% endif %}
     </div>
-    <a class="buttonlin" href="{% url 'projectss:create_project' %}">Create Project</a>
-</section>
+    {% if request.user.is_superuser %}
+    <a href="{% url 'updates:news_create' %}">New Project</a>
+    {% endif %}
 
+</div>
+
+
+
+<section id="section" style="margin-top: 3%;">
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for advertisement in advertisements %}
+    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <img src="{{ advertisement.advert_img.url }}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ advertisement.title }}</h5>
+        <p>{{ advertisement.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  </div>
+</div>
+</section>
 
 <div class="cov-container" style="margin-top: 3%;">
     <div class="covid-container">
@@ -108,4 +143,7 @@ padding: 10px 20px;
         <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
     </div>
 </div>
+
+</section>
 {% endblock %}
+

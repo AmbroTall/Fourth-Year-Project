@@ -1,19 +1,85 @@
 {% extends "index.html" %}
 {% block content %}
 
-
-<div class="detail-display">
-    <h1>{{ update.title }}</h1>
-    <img style="width:500px" src={{ update.news_img.url }}>
-    <p>{{ update.body|safe }}</p>
-</div><br>
-
-
-{% if request.user.is_authenticated %}
-<div style="text-align: center;margin-top: 15px;">
-    <a class="buttonlin" href="{% url 'updates:news_update' slug=object.slug %}">Update</a>
-    <a class="buttonlin" href="{% url 'updates:news_delete' slug=object.slug %}">Delete</a>
+<div class="container">
+	<div class="jumbotron jumbotron-fluid mb-3 pl-2 pt-0 pb-0 bg-white position-relative">
+		<div class="h-100 tofront">
+			<div class="row justify-content-between">
+				<div class="col-md-6 pt-6 pb-6 pr-6 align-self-center">
+					<p class="text-uppercase font-weight-bold">
+						<a class="text-danger" href="{% url 'updates:news_list' %}">Stories</a>
+					</p>
+					<h1 class="display-4 secondfont mb-3 font-weight-bold">{{ update.title }}</h1>
+					<p class="mb-3">
+                        {{ update.description }}
+                    </p>
+					<div class="d-flex align-items-center">
+						<img class="rounded-circle" src="{{ update.news_img.url }}" width="70" height="70">
+						<small class="ml-2"> <span class="text-muted d-block">{{ update.date_created }}</span>
+							{% if request.user.is_authenticated %}
+							<span><a  href="{% url 'updates:news_update' slug=object.slug %}">Update</a>
+    						<a class="text-danger" href="{% url 'updates:news_delete' slug=object.slug %}">Delete</a></span>
+							{% endif %}
+						</small>
+					</div>
+				</div>
+				<div class="col-md-6 pr-0">
+					<img width="500" height="300" src="{{ update.news_img.url }}">
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-{% endif %}
+
+<div class="container pt-4 pb-4">
+	<div class="row justify-content-center">
+		<div class="col-lg-2 pr-4 mb-4 col-md-12">
+			<div class="sticky-top text-center">
+				<div class="text-muted">
+					Share this
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 col-lg-8">
+			<article class="article-post">
+			<p>
+                {{ update.body|safe }}
+			</p>
+			</article>
+			<div class="border p-5 bg-lightblue">
+				<div class="row justify-content-between">
+					<div class="col-md-5 mb-2 mb-md-0">
+						<h5 class="font-weight-bold secondfont">Become a member</h5>
+						 Get the latest news right in your inbox. We never spam!
+					</div>
+					<div class="col-md-7">
+						<div class="row">
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="Enter your e-mail address">
+							</div>
+							<div class="col-md-12 mt-2">
+								<button type="submit" class="btn btn-success btn-block">Subscribe</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+
+
+
+
+
+
 
 {% endblock %}

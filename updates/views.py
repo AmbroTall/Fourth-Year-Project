@@ -10,13 +10,14 @@ from culture.models import Culture
 from facilities.models import Facilities
 from .myFilter import UpdateFilter
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
 def homepage(request):
     advertisements = Advertisements.objects.filter(home_advert=True)[0:8]
-    updates = Updates.objects.filter(important=True).order_by('-date_created')[0:4]
-    projects = Projects.objects.all().order_by('-date_published')[0:4]
+    updates = Updates.objects.filter(important=True).order_by('-date_created')[0:3]
+    projects = Projects.objects.all().order_by('-date_published')[0:3]
     vacancies = Houses.objects.all().order_by('-date_created')[0:3]
     culture = Culture.objects.all().order_by('-date_created')[0:3]
     facilities = Facilities.objects.all().order_by('-date_created')[0:3]
@@ -28,7 +29,7 @@ def homepage(request):
         'advertisements':advertisements,
         'updates':updates
     }
-    return render(request, 'updates/home_page.html', context)
+    return render(request, 'updates/home_page_two.html', context)
 
 
 def DisplayNews(request):
@@ -54,7 +55,7 @@ def DisplayNews(request):
     return render(request, 'updates/news_show.html', context)
 
 
-class NewsDetails(DetailView):
+class NewsDetails(LoginRequiredMixin,DetailView):
     model = Updates
     context_object_name = 'update'
     template_name = 'updates/detail_news.html'

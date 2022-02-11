@@ -6,7 +6,7 @@ from .forms import HouseVacancyForm
 from django.urls import reverse_lazy
 from .filters import VacancyFilter
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def HouseListView(request):
     advertisements = Advertisements.objects.filter(house_advert=True)[0:8]
@@ -14,7 +14,7 @@ def HouseListView(request):
     myFilter = VacancyFilter(request.GET, queryset=hous)
     projects = myFilter.qs
     page = request.GET.get('page')
-    paginator = Paginator(projects, 5)
+    paginator = Paginator(projects, 4)
     try:
         hous = paginator.page(page)
     except PageNotAnInteger:
@@ -30,7 +30,7 @@ def HouseListView(request):
     }
     return render(request, 'vacancies/house_list.html', context)
 
-class HouseDetailView(DetailView):
+class HouseDetailView(LoginRequiredMixin,DetailView):
     model = Houses
     template_name = 'vacancies/house_detail.html'
     context_object_name = 'house'

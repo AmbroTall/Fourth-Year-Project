@@ -1,6 +1,37 @@
 {% extends "index.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
+
+<style>
+    .create-news{
+    padding-top: 20px;
+    width: 500px;
+    margin : auto;
+    }
+
+    form label{
+    font-weight: bold;
+    }
+
+    .buttonlin{
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    outline : none;
+    border: none;
+    background: orange;
+    }
+    .buttonlin:hover{
+    letter-spacing: 2px;
+    border: 1px solid #333;
+    }
+
+    @media(max-width: 550px){
+    .create-news{
+    width: 400px;
+    margin : auto;
+    }
+    }
+</style>
 <div class="create-news">
 <h1> Create Vacancy </h1>
 <form method="post" enctype="multipart/form-data">

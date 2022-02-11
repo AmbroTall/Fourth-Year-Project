@@ -1,0 +1,43 @@
+{% load static %}
+<div class="container pt-4 pb-4">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card border-0 mb-4 box-shadow h-xl-300 pl-2">
+                <div class="wahesh">
+					<img class="img-wahesh img-fluid rounded-circle" src="{% static 'images/Theuri.jpg' %}" />
+            		<img class="img-wahesh img-fluid rounded-circle" src="{% static 'images/mca.jpeg' %}" />
+				</div>
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="h4 font-weight-bold">
+					<a class="text-dark" href="">A word from our current leaders, Mp and MCA respectively</a>
+					</h2>
+					<p class="card-text">
+						Catch all the latest of happenings in our home ground at the click on your web browser and see all the insights here in Umoja.Come live and experience the finest vibes in the city here in Umoja
+					</p>
+					<div>
+						<small class="d-block"><a class="text-muted" href="">Goerge Therui</a></small>
+						<small class="text-muted">Ronaldo</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="flex-md-row mb-4 box-shadow h-xl-300 bg-white pl-2 pt-2">
+				{% for project in projects %}
+				<div class="mb-3 d-flex align-items-center">
+					<img height="80" width="200" src="{{ project.proj_img.url }}">
+					<div class="pl-3">
+						<h2 class="mb-2 h6 font-weight-bold">
+						<a class="text-dark" href="{% url 'projectss:project_detail' slug=project.slug %}">{{ project.name }}</a>
+						</h2>
+						<div class="card-text text-muted small">
+							 {{ project.description|truncatechars:30 }}
+						</div>
+						<small class="text-muted">{{ project.date_published }}</small>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

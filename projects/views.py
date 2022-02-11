@@ -5,13 +5,14 @@ from .forms import CreateProjectForm
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .filters import ProjectFilter
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def ProjectListView(request):
     projects = Projects.objects.all().order_by('-date_published')
     myFilter = ProjectFilter(request.GET, queryset=projects)
     projects = myFilter.qs
     page = request.GET.get('page')
-    paginator = Paginator(projects, 8)
+    paginator = Paginator(projects, 5)
     try:
         projects = paginator.page(page)
     except PageNotAnInteger:
@@ -27,7 +28,7 @@ def ProjectListView(request):
     return render(request, 'projects/project_list.html', context)
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin,DetailView):
     model = Projects
     template_name = 'projects/project_detail.html'
     context_object_name = 'projects'

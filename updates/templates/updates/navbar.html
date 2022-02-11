@@ -33,39 +33,113 @@ background: #fff;
 color: var(--clr-accent);
 }
 </style>
-<header style="background: #16e0bd;">
-    <h3 class="logo"><a href="{% url 'updates:homepage' %}"><i>Umoja</i></a></h3>
-    <div class="menu-login">
-<!--        <div class="login-button">-->
-<!--            {% if request.user.is_authenticated %}-->
-<!--            <a class="navli" href="">Logout</a>-->
-<!--            {% else %}-->
-<!--            <a class="navli" href="">Login</a>-->
-<!--            {% endif %}-->
-<!--        </div>-->
-        <div class="menu-bar" id="opemen" onclick="openmenu()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-    </div>
-    <div class="links-nav" id="links-nav">
-        <p style="font-weight:bold; float: right;margin-right: 10px;cursor: pointer" id="closmen" onclick="closemenu()">X</p>
-        <ul>
-            <li><a class="navlink" href="{% url 'updates:news_list' %}">News</a></li>
-            <li><a class="navlink" href="{% url 'projectss:project_home' %}">Projects</a></li>
-            <li><a class="navlink" href="{% url 'vacancies:vacancy_home' %}">Vacancies</a></li>
-            <li><a class="navlink" href="{% url 'culture:culture_home' %}">Culture</a></li>
-            <li><a class="navlink" href="{% url 'facilities:facilities_home' %}">Facilities</a></li>
-        </ul>
-    </div>
-</header>
 
-<script>
-function openmenu(){
-    document.getElementById("links-nav").style.display="block";
-}
-function closemenu(){
-    document.getElementById("links-nav").style.display="none";
-}
-</script>
+<nav class="topnav navbar navbar-expand-lg navbar-light bg-warning fixed-top">
+        <div class="container">
+			<a class="navbar-brand" href="{% url 'updates:homepage' %}"><strong>Umoja</strong></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto d-flex align-items-center">
+				<li class="nav-item">
+				<a class="nav-link" href="{% url 'updates:news_list' %}">News<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="{% url 'projectss:project_home' %}">Projects</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="{% url 'vacancies:vacancy_home' %}">Vacancies</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="{% url 'culture:culture_home' %}">Culture</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="{% url 'facilities:facilities_home' %}">Facilities</a>
+				</li>
+			</ul>
+			  <div>
+				{% if request.user.is_authenticated %}
+				<a href="{% url 'auth_user:logout' %}">Logout</a>
+				{% else %}
+				<a style="font-weight:bold;text-decoration: underline;" href="{% url 'auth_user:login' %}">Sign In</a>
+				<a style="font-weight:bold;" class="btn btn-secondary" href="{% url 'auth_user:register' %}">Sign Up</a>
+				{% endif %}
+			</div>
+          </div>
+<!--			<div>-->
+<!--				{% if request.user.is_authenticated %}-->
+<!--				<a href="{% url 'auth_user:login' %}">Logout</a>-->
+<!--				{% else %}-->
+<!--				<a style="font-weight:bold;text-decoration: underline;" href="{% url 'auth_user:login' %}">Sign In</a>-->
+<!--				<a style="font-weight:bold;" class="btn btn-secondary" href="{% url 'auth_user:register' %}">Sign Up</a>-->
+<!--				{% endif %}-->
+<!--			</div>-->
+        </div>
+      </nav>
+
+<!--<nav class="topnav navbar navbar-expand-lg navbar-light bg-warning fixed-top">-->
+<!--<div class="container">-->
+<!--	<a class="navbar-brand" href="./index.html"><strong>Umoja</strong></a>-->
+<!--	<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--	<span class="navbar-toggler-icon"></span>-->
+<!--	</button>-->
+<!--	<div class="navbar-collapse collapse" id="navbarColor02" style="">-->
+<!--		<ul class="navbar-nav mr-auto d-flex align-items-center">-->
+<!--			<li class="nav-item">-->
+<!--			<a class="nav-link" href="{% url 'updates:news_list' %}">News<span class="sr-only">(current)</span></a>-->
+<!--			</li>-->
+<!--			<li class="nav-item">-->
+<!--			<a class="nav-link" href="{% url 'projectss:project_home' %}">Projects</a>-->
+<!--			</li>-->
+<!--			<li class="nav-item">-->
+<!--			<a class="nav-link" href="{% url 'vacancies:vacancy_home' %}">Vacancies</a>-->
+<!--			</li>-->
+<!--			<li class="nav-item">-->
+<!--			<a class="nav-link" href="{% url 'culture:culture_home' %}">Culture</a>-->
+<!--			</li>-->
+<!--			<li class="nav-item">-->
+<!--			<a class="nav-link" href="{% url 'facilities:facilities_home' %}">Facilities</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+
+<!--	</div>-->
+<!--</div>-->
+<!--</nav>-->
+
+<!--<header style="background: #16e0bd;">-->
+<!--    <h3 class="logo"><a href="{% url 'updates:homepage' %}"><i>Umoja</i></a></h3>-->
+<!--    <div class="menu-login">-->
+<!--&lt;!&ndash;        <div class="login-button">&ndash;&gt;-->
+<!--&lt;!&ndash;            {% if request.user.is_authenticated %}&ndash;&gt;-->
+<!--&lt;!&ndash;            <a class="navli" href="">Logout</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            {% else %}&ndash;&gt;-->
+<!--&lt;!&ndash;            <a class="navli" href="">Login</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            {% endif %}&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        <div class="menu-bar" id="opemen" onclick="openmenu()">-->
+<!--            <div class="bar1"></div>-->
+<!--            <div class="bar2"></div>-->
+<!--            <div class="bar3"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="links-nav" id="links-nav">-->
+<!--        <p style="font-weight:bold; float: right;margin-right: 10px;cursor: pointer" id="closmen" onclick="closemenu()">X</p>-->
+<!--        <ul>-->
+<!--            <li><a class="navlink" href="{% url 'updates:news_list' %}">News</a></li>-->
+<!--            <li><a class="navlink" href="{% url 'projectss:project_home' %}">Projects</a></li>-->
+<!--            <li><a class="navlink" href="{% url 'vacancies:vacancy_home' %}">Vacancies</a></li>-->
+<!--            <li><a class="navlink" href="{% url 'culture:culture_home' %}">Culture</a></li>-->
+<!--            <li><a class="navlink" href="{% url 'facilities:facilities_home' %}">Facilities</a></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<script>-->
+<!--function openmenu(){-->
+<!--    document.getElementById("links-nav").style.display="block";-->
+<!--}-->
+<!--function closemenu(){-->
+<!--    document.getElementById("links-nav").style.display="none";-->
+<!--}-->
+<!--</script>-->

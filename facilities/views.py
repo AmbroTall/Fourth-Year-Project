@@ -5,6 +5,7 @@ from .forms import CreateFacilitiesForm
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .filters import FacilitiesFilter
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def FacilitiesListView(request):
     projects = Facilities.objects.all().order_by('-date_created')
@@ -29,7 +30,7 @@ def FacilitiesListView(request):
 
 
 
-class FacilitiesDetailView(DetailView):
+class FacilitiesDetailView(LoginRequiredMixin,DetailView):
     model = Facilities
     template_name = 'facilities/facilities_detail.html'
     context_object_name = 'projects'

@@ -61,6 +61,16 @@ letter-spacing: 1.5px;
 color: #fff;
 }
 
+.img-wahesh{
+height : 240px;
+width : 240px;
+border: 3px solid #16e0bd;
+}
+
+.head-lead{
+padding : 10px;
+}
+
 @media(max-width: 600px){
 .cov-container{
 margin-top: 5%;
@@ -125,6 +135,26 @@ padding: 10px 20px;
 </section>
 
 
+<section class="leader mt-5 mb-5 bg-secondary">
+    <h1 class="head-lead" style="color: #16e0bd;text-align: center; text-decoration: underline;">Leaders Section</h1>
+    <div class="container leader-section p-5">
+        <div class="mp-words d-flex align-items-center mb-5">
+            <img class="img-wahesh img-fluid rounded-circle" src="{% static 'images/Theuri.jpg' %}" />
+            <div class="name-speech text-end">
+                <p><b>"</b> Welcome to Umoja The Great Place to be in the City.Welcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the City<b>"</b></p>
+                <h5 class="d-flex justify-content-end">Goerge Theuri</h5>
+            </div>
+        </div>
+        <hr style="color-tomato;"/>
+        <div class="mca-words d-flex mt-5 align-items-center">
+            <div class="name-speech text-end">
+                <p><b>"</b> Welcome to Umoja The Great Place to be in the City.Welcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the CityWelcome to Umoja The Great Place to be in the City<b>"</b></p>
+                <h5 class="d-flex justify-content-end">Goerge Theuri</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="cov-container" style="margin-top: 3%;">
     <div class="covid-container">
         <h4><i>Stay safe.Protect Yourself</i></h4>
@@ -132,6 +162,8 @@ padding: 10px 20px;
         <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
     </div>
 </div>
+
+
 
 <div class="main-container">
     <h1 class="row-link">News</h1>
@@ -143,7 +175,7 @@ padding: 10px 20px;
                 <div class="post-review">
                      <hr>
                     <h6><a class="news-linkkk" href="{% url 'updates:news_details' slug=update.slug %}">{{ update.title }}</a></h6>
-                    <p style="color: black;"> {{ update.description }} </p>
+                    <p style="color: black;"> {{ update.description|truncatechars:30 }} </p>
                     {% for tag in update.Tags.all %}
                     <span class="tag"> {{ tag }} </span>
                     {% endfor %}
@@ -163,7 +195,7 @@ padding: 10px 20px;
                 <hr>
                 <div class="post-review">
                     <h6><a class="news-linkkk" href="{% url 'projectss:project_detail' slug=project.slug %}"> {{ project.name }}</a></h6>
-                    <p style="color: black;">{{ project.description }}</p>
+                    <p style="color: black;">{{ project.description|truncatechars:30 }}</p>
                 </div>
             </div>
         {% endfor %}
@@ -181,7 +213,7 @@ padding: 10px 20px;
                  <hr>
                 <div class="post-review">
                     <h6><a class="news-linkkk" href="{% url 'vacancies:vacancy_detail' slug=vacancy.slug %}">{{ vacancy.location }}</a></h6>
-                    <p style="color: black;"> {{ vacancy.description }} </p>
+                    <p style="color: black;"> {{ vacancy.description|truncatechars:30 }} </p>
                     <hr>
                     {% for tag in vacancy.tags.all %}
                     <span class="tag"> {{ tag }} </span>
@@ -202,7 +234,7 @@ padding: 10px 20px;
                 <hr>
                 <div class="post-review">
                     <h6><a class="news-linkkk" href="{% url 'culture:culture_detail' slug=cultur.slug %}" >{{ cultur.name }}</a></h6>
-                    <p style="color: black;"> {{ cultur.description }} </p>
+                    <p style="color: black;"> {{ cultur.description|truncatechars:30 }} </p>
                 </div>
             </div>
         {% endfor %}
@@ -217,7 +249,7 @@ padding: 10px 20px;
                 <img class="vac-img" src="{{ facility.img.url }}">
                 <div class="post-review">
                     <h6><a class="news-linkkk" href="{% url 'facilities:facilities_detail' slug=facility.slug %}">{{ facility.name }}</a></h6>
-                    <p style="color: black;"> {{ facility.description }}</p>
+                    <p style="color: black;"> {{ facility.description|truncatechars:30 }}</p>
                     <hr>
                 </div>
             </div>

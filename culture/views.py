@@ -7,13 +7,15 @@ from .forms import CreateCultureForm
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .filters import CultureFilter
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def CultureListView(request):
     projects = Culture.objects.all().order_by('-date_created')
     myFilter = CultureFilter(request.GET, queryset=projects)
     projects = myFilter.qs
     page = request.GET.get('page')
-    paginator = Paginator(projects, 5)
+    paginator = Paginator(projects, 4)
     try:
         projects = paginator.page(page)
     except PageNotAnInteger:
@@ -31,7 +33,7 @@ def CultureListView(request):
 
 
 
-class CultureDetailView(DetailView):
+class CultureDetailView(LoginRequiredMixin,DetailView):
     model = Culture
     template_name = 'culture/culture_detail.html'
     context_object_name = 'projects'

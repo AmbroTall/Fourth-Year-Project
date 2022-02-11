@@ -29,6 +29,7 @@ urlpatterns = [
     path('vacancies/', include('vacancies.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('covid.urls')),
+    path('', include('user_auth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

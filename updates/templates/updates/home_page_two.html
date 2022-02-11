@@ -1,0 +1,198 @@
+{% extends "index.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+	.img-wahesh{
+height : 70px;
+width : 70px;
+margin-right: 20px;
+border: 3px solid #333;
+<!--border: 3px solid #16e0bd;-->
+}
+.wahesh{
+margin-top: 10px;
+display: flex;
+justify-content: center;
+}
+
+.covid-container{
+width: 70%;
+margin: auto;
+padding: 40px 40px;
+text-align: center;
+color: #fff;
+}
+.covid-container{
+background-image: url({% static 'images/corona.gif' %})
+}
+.covid-container h6{
+font-size: 10px;
+text-align: right;
+padding-right: 35%;
+}
+
+.covid-butt{
+border: 1px solid transparent;
+background-color: crimson;
+padding:3px 20px;
+font-size: 10px;
+color: black;
+transition: 0.3s ease in;
+cursor: pointer;
+}
+.covid-butt:hover{
+background-color: red;
+text-decoration: none;
+letter-spacing: 1.5px;
+color: #fff;
+}
+</style>
+
+<!--------------------------------------
+HEADER
+--------------------------------------->
+<div class="container">
+	<div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
+		<div class="pl-4 pr-0 h-100 tofront">
+			<div class="row justify-content-between">
+				<div class="col-md-6 pt-6 pb-6 align-self-center">
+					<h1 class="secondfont mb-3 font-weight-bold">Umoja is the best place to live in the City of Nairobi</h1>
+					<p class="mb-3">
+						Catch all the latest of happenings in our home ground at the click on your web browser and see all the insights here in Umoja.Come live and experience the finest vibes in the city here in Umoja
+					</p>
+					<a href="" class="btn btn-dark">Choose through our menu to get more insights in our Town.</a>
+				</div>
+				<div class="col-md-6 d-none d-md-block pr-0" style="background-size:cover;background-image:url({% static 'images/Umoja-logo-1.jpg'%});">	</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Header -->
+    
+    
+<!--------------------------------------
+MAIN
+--------------------------------------->
+    
+<div class="container pt-4 pb-4">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card border-0 mb-4 box-shadow h-xl-300 pl-2">
+                <div class="wahesh">
+					<img id="mp" class="img-wahesh img-fluid rounded-circle" src="{% static 'images/Theuri.jpg' %}" />
+            		<img id="mca" onclick="displayMca()" class="img-wahesh img-fluid rounded-circle" src="{% static 'images/mca.jpeg' %}" />
+				</div>
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="h4 font-weight-bold">
+					<a id="heading-mca" class="text-dark" href="">A word from our current leaders, Mp section</a>
+					</h2>
+					<p class="card-text" id="speech-mca">
+						Catch all the latest of happenings in our home ground at the click on your web browser and see all the insights here in Umoja.Come live and experience the finest vibes in the city here in Umoja
+					</p>
+					<div>
+						<small class="d-block"><a class="text-muted" style="cursor:pointer;" onclick="displayMp()">Goerge Therui</a></small>
+						<small class="text-muted">Ronaldo</small>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="flex-md-row mb-4 box-shadow h-xl-300 bg-white pl-2 pt-2">
+				{% for project in projects %}
+				<div class="mb-3 d-flex align-items-center">
+					<img height="80" width="200" src="{{ project.proj_img.url }}">
+					<div class="pl-3">
+						<h2 class="mb-2 h6 font-weight-bold">
+						<a class="text-dark" href="{% url 'projectss:project_detail' slug=project.slug %}">{{ project.name }}</a>
+						</h2>
+						<div class="card-text text-muted small">
+							 {{ project.description|truncatechars:30 }}
+						</div>
+						<small class="text-muted">{{ project.date_published }}</small>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+    
+<div class="container bg-white">
+	<div class="row justify-content-between p-5">
+		<div class="col-md-8">
+			<h5 class="font-weight-bold spanborder"><span>All Stories</span></h5>
+			 {% for cultur in culture %}
+			<div class="mb-3 d-flex justify-content-between">
+				<div class="pr-3">
+					<h2 class="mb-1 h4 font-weight-bold">
+					<a class="text-dark" href="{% url 'culture:culture_detail' slug=cultur.slug %}">{{ cultur.name }}</a>
+					</h2>
+					<p>
+						{{ cultur.description|truncatechars:30 }}
+					</p>
+					<div class="card-text text-muted small">
+						 {{ cultur.date_created }}
+					</div>
+					<small class="text-muted">{{ update.date_created }}</small>
+				</div>
+				<img height="150" width="200" src="{{ cultur.img.url }}">
+			</div>
+			{% endfor %}
+		</div>
+		<div class="col-md-4 pl-4">
+            <h5 class="font-weight-bold spanborder"><span>Latest</span></h5>
+
+			<ol class="list-featured">
+				{% for update in updates %}
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="{% url 'updates:news_details' slug=update.slug %}" class="text-dark">{{ update.title }}</a>
+				</h6>
+				<p class="text-muted">
+					{{ update.description|truncatechars:30 }}
+				</p>
+				</span>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+</div>
+
+<div class="cov-container" style="margin-top: 3%;">
+    <div class="covid-container">
+        <h4><i>Stay safe.Protect Yourself</i></h4>
+        <h4>Mask on,sanitize & wash hands</h4>
+        <h6>Check out <a href="{% url 'covid:dashboard' %}" class="covid-butt">Covid19</a> data</h6>
+    </div>
+</div>
+
+
+<script>
+	function displayMca(){
+	console.log('Ambro')
+		var heading = document.getElementById("heading-mca");
+		var mp = document.getElementById("mp");
+		mp.style.display = "none";
+		var speechMca = document.getElementById("speech-mca");
+		speechMca.innerHTML = 'As your MCA am very glad to serve you and we will keep working to better our situations,'
+		heading.innerHTML = 'A word from our current leaders, MCA section';
+	}
+
+	function displayMp(){
+		console.log('Ambro')
+		var heading = document.getElementById("heading-mca");
+		var mp = document.getElementById("mp");
+		mp.style.display = "block";
+		var speechMca = document.getElementById("speech-mca");
+		speechMca.innerHTML = 'Catch all the latest of happenings in our home ground at the click on your web browser and see all the insights here in Umoja.Come live and experience the finest vibes in the city here in Umoja.'
+		heading.innerHTML = 'A word from our current leaders, MP section';
+	}
+</script>
+<!--------------------------------------
+FOOTER
+--------------------------------------->
+
+{% endblock %}
